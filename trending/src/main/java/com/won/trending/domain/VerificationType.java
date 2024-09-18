@@ -1,4 +1,4 @@
-package com.won.trending.modal;
+package com.won.trending.domain;
 
 public enum VerificationType {
     MOBILE,

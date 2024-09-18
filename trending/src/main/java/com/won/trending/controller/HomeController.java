@@ -9,4 +9,9 @@ public class HomeController {
     public String Home() {
         return "Welcome to trending platform";
     }
+
+    @GetMapping("/api")
+    public String secure() {
+        return "Welcome to trending platform Secure";
+    }
 }
