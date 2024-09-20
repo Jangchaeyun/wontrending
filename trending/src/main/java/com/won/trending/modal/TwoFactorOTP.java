@@ -12,7 +12,6 @@ public class TwoFactorOTP {
     @Id
     private String id;
 
-
     private String otp;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
