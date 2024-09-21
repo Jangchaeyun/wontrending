@@ -120,6 +120,7 @@ public class AuthController {
     }
 
 
+    @PostMapping("/two-factor/otp/{otp}")
     public ResponseEntity<AuthResponse> verifySignInOtp(
             @PathVariable String otp,
             @RequestParam String id) throws Exception {
