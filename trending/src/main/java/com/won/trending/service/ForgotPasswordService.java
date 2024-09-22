@@ -4,7 +4,7 @@ import com.won.trending.domain.VerificationType;
 import com.won.trending.modal.ForgotPasswordToken;
 import com.won.trending.modal.User;
 
-public interface ForgotPassword {
+public interface ForgotPasswordService {
     ForgotPasswordToken createToken(User user,
                                     String id,
                                     String otp,
