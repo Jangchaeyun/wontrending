@@ -43,7 +43,7 @@ public class Coin {
     private double high24h;
 
     @JsonProperty("low_24h")
-    private double low2h;
+    private double low24h;
 
     @JsonProperty("price_change_24h")
     private double priceChange24h;
