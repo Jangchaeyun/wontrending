@@ -27,7 +27,7 @@ public class WalletServiceImpl implements WalletService {
     }
 
     @Override
-    public Wallet addBalanceToWallet(Wallet wallet, Long money) {
+    public Wallet addBalance(Wallet wallet, Long money) {
         BigDecimal balance = wallet.getBalance();
         BigDecimal newBalance = balance.add(BigDecimal.valueOf(money));
 
