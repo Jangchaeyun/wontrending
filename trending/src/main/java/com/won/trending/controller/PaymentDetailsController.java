@@ -41,7 +41,8 @@ public class PaymentDetailsController {
     ) throws Exception {
         User user = userService.findUserProfileByJwt(jwt);
 
-        PaymentDetails paymentDetails = paymentDetailsService.getUsersPaymentDetails(user);
+        PaymentDetails paymentDetails = paymentDetailsService
+                .getUsersPaymentDetails(user);
         return new ResponseEntity<>(paymentDetails, HttpStatus.CREATED);
     }
 }

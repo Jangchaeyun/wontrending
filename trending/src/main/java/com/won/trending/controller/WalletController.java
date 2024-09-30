@@ -1,11 +1,10 @@
 package com.won.trending.controller;
 
 import com.won.trending.domain.WalletTransactionType;
-import com.won.trending.modal.Order;
-import com.won.trending.modal.User;
-import com.won.trending.modal.Wallet;
-import com.won.trending.modal.WalletTransaction;
+import com.won.trending.modal.*;
+import com.won.trending.response.PaymentResponse;
 import com.won.trending.service.OrderService;
+import com.won.trending.service.PaymentService;
 import com.won.trending.service.UserService;
 import com.won.trending.service.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +23,9 @@ public class WalletController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private PaymentService paymentService;
 
     @GetMapping("/api/wallet")
     public ResponseEntity<Wallet> getUserWallet(@RequestHeader("Authorization") String jwt) throws Exception {
@@ -59,6 +61,27 @@ public class WalletController {
        Order order = orderService.getOrderById(orderId);
 
        Wallet wallet = walletService.payOrderPayment(order, user);
+
+        return new ResponseEntity<>(wallet, HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping("/api/wallet/deposit")
+    public ResponseEntity<Wallet> addMoneyToWallet(
+            @RequestHeader("Authorization") String jwt,
+            @RequestParam(name="order_id") Long orderId,
+            @RequestParam(name="payment_id") String paymentId
+    ) throws Exception {
+        User user = userService.findUserProfileByJwt(jwt);
+
+        Wallet wallet = walletService.getUserWallet(user);
+
+        PaymentOrder order = paymentService.getPaymentOrderById(orderId);
+
+        Boolean status = paymentService.ProccedPaymentOrder(order, paymentId);
+
+        if (status) {
+            wallet = walletService.addBalance(wallet, order.getAmount());
+        }
 
         return new ResponseEntity<>(wallet, HttpStatus.ACCEPTED);
     }
