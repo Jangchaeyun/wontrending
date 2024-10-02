@@ -40,6 +40,7 @@ public class PaymentServiceImpl implements PaymentService {
         paymentOrder.setUser(user);
         paymentOrder.setAmount(amount);
         paymentOrder.setPaymentMethod(paymentMethod);
+        paymentOrder.setStatus(PaymentOrderStatus.PENDING);
 
         return paymentOrderRepository.save(paymentOrder);
     }
@@ -50,7 +51,11 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Boolean ProccedPaymentOrder(PaymentOrder paymentOrder, String paymentId) throws RazorpayException {
+    public Boolean ProccedPaymentOrder(PaymentOrder paymentOrder, String paymentId) throws RazorpayException, StripeException {
+        if (paymentOrder.getStatus() == null) {
+            paymentOrder.setStatus(PaymentOrderStatus.PENDING);
+        }
+
         if (paymentOrder.getStatus().equals(PaymentOrderStatus.PENDING)) {
             if (paymentOrder.getPaymentMethod().equals(PaymentMethod.RAZORPAY)) {
                 RazorpayClient razorpay = new RazorpayClient(apiKey, apiSecretKey);
@@ -63,6 +68,23 @@ public class PaymentServiceImpl implements PaymentService {
                     paymentOrder.setStatus(PaymentOrderStatus.SUCCESS);
                     return true;
                 }
+                paymentOrder.setStatus(PaymentOrderStatus.FAILED);
+                paymentOrderRepository.save(paymentOrder);
+                return false;
+            }
+            // Stripe 처리
+            if (paymentOrder.getPaymentMethod().equals(PaymentMethod.STRIPE)) {
+                Stripe.apiKey = stripeSecretKey;
+
+                // 결제 확인 (Stripe에서는 Session ID로 확인 가능)
+                Session session = Session.retrieve(paymentId);
+
+                if ("complete".equals(session.getPaymentStatus())) {
+                    paymentOrder.setStatus(PaymentOrderStatus.SUCCESS);
+                    paymentOrderRepository.save(paymentOrder);
+                    return true;
+                }
+
                 paymentOrder.setStatus(PaymentOrderStatus.FAILED);
                 paymentOrderRepository.save(paymentOrder);
                 return false;
@@ -86,7 +108,7 @@ public class PaymentServiceImpl implements PaymentService {
                 .addLineItem(SessionCreateParams.LineItem.builder()
                         .setQuantity(1L)
                         .setPriceData(SessionCreateParams.LineItem.PriceData.builder()
-                                .setCurrency("kwd")
+                                .setCurrency("krw")
                                 .setUnitAmount(amount * 100)
                                 .setProductData(SessionCreateParams
                                         .LineItem

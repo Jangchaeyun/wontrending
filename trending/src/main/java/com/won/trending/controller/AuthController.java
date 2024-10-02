@@ -8,6 +8,7 @@ import com.won.trending.response.AuthResponse;
 import com.won.trending.service.CustomeUserDetailsService;
 import com.won.trending.service.EmailService;
 import com.won.trending.service.TwoFactorOtpService;
+import com.won.trending.service.WatchlistService;
 import com.won.trending.utils.OtpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,9 @@ public class AuthController {
     private TwoFactorOtpService twoFactorOtpService;
 
     @Autowired
+    private WatchlistService watchlistService;
+
+    @Autowired
     private EmailService emailService;
 
     @PostMapping("/signup")
@@ -48,6 +52,8 @@ public class AuthController {
         newUser.setFullName(user.getFullName());
 
         User savedUser = userRepository.save(newUser);
+
+        watchlistService.createWatchlist(savedUser);
 
         Authentication auth = new UsernamePasswordAuthenticationToken(
                 user.getEmail(),

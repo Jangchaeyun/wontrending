@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
 public class PaymentController {
     @Autowired
     private UserService userService;
@@ -22,7 +21,7 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
-    @PostMapping("/payment/{paymentMethod}/amount/{amount}")
+    @PostMapping("/api/payment/{paymentMethod}/amount/{amount}")
     public ResponseEntity<PaymentResponse> paymentHandler(
             @PathVariable PaymentMethod paymentMethod,
             @PathVariable Long amount,
