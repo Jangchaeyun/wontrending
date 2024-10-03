@@ -55,7 +55,7 @@ public class OrderController {
 
     @GetMapping()
     public ResponseEntity<List<Order>> getAllOrdersForUser(
-            @RequestParam("Authorization") String jwt,
+            @RequestHeader("Authorization") String jwt,
             @RequestParam(required = false) String order_type,
             @RequestParam(required = false) String asset_symbol
     ) throws Exception {
