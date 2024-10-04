@@ -15,7 +15,7 @@ public class PaymentDetails {
 
     private String accountHolderName;
 
-    private String ifsc;
+    private String bic;
 
     private String bankName;
 

@@ -1,10 +1,13 @@
 package com.won.trending.controller;
 
+import com.won.trending.domain.WalletTransactionType;
 import com.won.trending.modal.User;
 import com.won.trending.modal.Wallet;
+import com.won.trending.modal.WalletTransaction;
 import com.won.trending.modal.Withdrawal;
 import com.won.trending.service.UserService;
 import com.won.trending.service.WalletService;
+import com.won.trending.service.WalletTransactionService;
 import com.won.trending.service.WithdrawalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,8 +27,8 @@ public class WithdrawalController {
     @Autowired
     private WalletService walletService;
 
-//    @Autowired
-//    private WalletTransactionService walletTransactionService;
+    @Autowired
+    private WalletTransactionService walletTransactionService;
 
     @PostMapping("/api/withdrawal/{amount}")
     public ResponseEntity<?> withdrawalRequest(
@@ -37,6 +40,13 @@ public class WithdrawalController {
 
         Withdrawal withdrawal = withdrawalService.requestyWithdrawal(amount, user);
         walletService.addBalance(userWallet, -withdrawal.getAmount());
+
+        WalletTransaction walletTransaction = walletTransactionService.createTransaction(
+                userWallet,
+                WalletTransactionType.WITHDRAWAL, null,
+                "bank account withdrawal",
+                withdrawal.getAmount()
+        );
 
         return new ResponseEntity<>(withdrawal, HttpStatus.OK);
     }
