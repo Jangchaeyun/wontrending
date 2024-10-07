@@ -19,7 +19,7 @@ const WatchList = () => {
   return (
     <div className="p-5 lg:p-20">
       <h1 className="font-bold text-3xl pb-5">관심목록</h1>
-      <Table className="boder">
+      <Table className="border">
         <TableHeader>
           <TableRow>
             <TableHead className="py-5">코인</TableHead>
