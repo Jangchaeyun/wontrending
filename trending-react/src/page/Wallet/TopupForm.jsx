@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -16,6 +17,9 @@ const TopupForm = () => {
     setAmount(e.target.value);
   };
 
+  const handleSubmit = () => {
+    console.log(amount, paymentMethod);
+  };
   return (
     <div className="pt-10 space-y-5">
       <div>
@@ -42,9 +46,10 @@ const TopupForm = () => {
               id="r1"
             />
             <Label htmlFor="r1">
-              <div className="bg-white rounded-md px-5 py-2 w-32">
+              <div className="bg-white rounded-md px-5 w-32">
                 <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGZVxQZ2UYa4aZMO1u_hgQPt-OVvqLq5MnoA&s"
+                  className="h-9"
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/768px-Stripe_Logo%2C_revised_2016.svg.png"
                   alt=""
                 />
               </div>
@@ -52,6 +57,9 @@ const TopupForm = () => {
           </div>
         </RadioGroup>
       </div>
+      <Button onClick={handleSubmit} className="w-full py-7">
+        충전
+      </Button>
     </div>
   );
 };
