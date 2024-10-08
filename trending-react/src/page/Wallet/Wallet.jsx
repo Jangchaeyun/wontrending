@@ -92,7 +92,7 @@ const Wallet = () => {
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle className="text-center text-xl">
-                      다른 지갑으로 전송
+                      다른 지갑으로 선물
                     </DialogTitle>
                   </DialogHeader>
                   <TransferForm />
