@@ -13,7 +13,7 @@ const TopupForm = () => {
     setPaymentMethod(value);
   };
 
-  const handleAmount = (e) => {
+  const handleChange = (e) => {
     setAmount(e.target.value);
   };
 
@@ -25,7 +25,7 @@ const TopupForm = () => {
       <div>
         <h1 className="pb-1">금액 입력</h1>
         <Input
-          onChange={handleAmount}
+          onChange={handleChange}
           value={amount}
           className="py-7 text-lg"
           placeholder="₩ 9999"
