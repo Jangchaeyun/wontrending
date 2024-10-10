@@ -6,3 +6,7 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+
+.bgBlure {
+  backdrop-filter: blur(10px);
+}
