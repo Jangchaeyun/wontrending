@@ -13,6 +13,8 @@ import Profile from "./page/Profile/Profile";
 import SearchCoin from "./page/Search/SearchCoin";
 import NotFound from "./page/NotFound/NotFound";
 import Auth from "./page/Auth/Auth";
+import SigninForm from "./page/Auth/SigninForm";
+import SignupForm from "./page/Auth/SignupForm";
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/search" element={<SearchCoin />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/signin" element={<SigninForm />} />
+            <Route path="/signup" element={<SignupForm />} />
           </Routes>
         </div>
       )}

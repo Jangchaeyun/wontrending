@@ -49,7 +49,7 @@ const Navbar = () => {
             <Sidebar />
           </SheetContent>
         </Sheet>
-        <p className="text-sm lg:text-base cursor-pointer">Won Trading</p>
+        <p className="text-sm lg:text-base cursor-pointer">Won Treading</p>
         <div className="p-0 ml-9">
           <Button variant="outline" className="flex items-center gap-3">
             <MagnifyingGlassIcon />
