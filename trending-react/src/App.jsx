@@ -15,12 +15,22 @@ import NotFound from "./page/NotFound/NotFound";
 import Auth from "./page/Auth/Auth";
 import SigninForm from "./page/Auth/SigninForm";
 import SignupForm from "./page/Auth/SignupForm";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getUser } from "./State/Auth/Action";
 
 function App() {
+  const { auth } = useSelector((store) => store);
+  const dispatch = useDispatch();
+
+  console.log("auth --- ", auth);
+
+  useEffect(() => {
+    dispatch(getUser(auth.jwt || localStorage.getItem("jwt")));
+  }, [auth.jwt]);
   return (
     <>
-      <Auth />
-      {false && (
+      {auth.user ? (
         <div>
           <Navbar />
           <Routes>
@@ -35,10 +45,10 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/search" element={<SearchCoin />} />
             <Route path="*" element={<NotFound />} />
-            <Route path="/signin" element={<SigninForm />} />
-            <Route path="/signup" element={<SignupForm />} />
           </Routes>
         </div>
+      ) : (
+        <Auth />
       )}
     </>
   );
