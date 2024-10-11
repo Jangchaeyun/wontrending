@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { DialogClose } from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -25,7 +24,8 @@ const SignupForm = () => {
     console.log(data);
   };
   return (
-    <div className="px-10 py-2">
+    <div>
+      <h1 className="text-xl font-bold text-center pb-3">회원가입</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
@@ -72,6 +72,7 @@ const SignupForm = () => {
                 <FormLabel>비밀번호</FormLabel>
                 <FormControl>
                   <Input
+                    type="password"
                     name="password"
                     className="border w-full border-gray-700 p-5"
                     placeholder="비밀번호...."
