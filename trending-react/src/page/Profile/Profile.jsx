@@ -11,8 +11,10 @@ import {
 import { VerifiedIcon } from "lucide-react";
 import React from "react";
 import AccountVartificationForm from "./AccountVartificationForm";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
+  const { auth } = useSelector((store) => store);
   const handleEnableTwoStepVerficiation = () => {
     console.log("two step verfication");
   };
@@ -26,11 +28,11 @@ const Profile = () => {
               <div className="space-y-7">
                 <div className="flex">
                   <p className="w-[9rem]">이메일: </p>
-                  <p className="text-gray-500">bandaid@gmail.com</p>
+                  <p className="text-gray-500">{auth.user?.email}</p>
                 </div>
                 <div className="flex">
                   <p className="w-[9rem]">이름: </p>
-                  <p className="text-gray-500">장채윤</p>
+                  <p className="text-gray-500">{auth.user?.fullName}</p>
                 </div>
                 <div className="flex">
                   <p className="w-[9rem]">생일: </p>
@@ -44,11 +46,11 @@ const Profile = () => {
               <div className="space-y-7">
                 <div className="flex">
                   <p className="w-[9rem]">이메일: </p>
-                  <p className="text-gray-500">bandaid@gmail.com</p>
+                  <p className="text-gray-500">{auth.user?.email}</p>
                 </div>
                 <div className="flex">
                   <p className="w-[9rem]">이름: </p>
-                  <p className="text-gray-500">장채윤</p>
+                  <p className="text-gray-500">{auth.user?.fullName}</p>
                 </div>
                 <div className="flex">
                   <p className="w-[9rem]">생일: </p>

@@ -1,4 +1,5 @@
 import { Avatar } from "@/components/ui/avatar";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -8,44 +9,54 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { AvatarImage } from "@radix-ui/react-avatar";
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const AssetTable = () => {
+const AssetTable = ({ coin, category }) => {
   const navigate = useNavigate();
+  const exchangeRate = 1349;
+
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[100px]">코인</TableHead>
-          <TableHead>식별코드</TableHead>
-          <TableHead>거래량</TableHead>
-          <TableHead>시가총액</TableHead>
-          <TableHead>24H</TableHead>
-          <TableHead className="text-right">현재 가격</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((item, index) => (
-          <TableRow key={index}>
-            <TableCell
-              onClick={() => navigate(`/market/bitcoin`)}
-              className="font-medium flex items-center gap-2"
-            >
-              <Avatar className="-z-50">
-                <AvatarImage src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png" />
-              </Avatar>
-              <span>Bitcoin</span>
-            </TableCell>
-            <TableCell>BTC</TableCell>
-            <TableCell>6834455792</TableCell>
-            <TableCell>376962336317</TableCell>
-            <TableCell>-19129.99</TableCell>
-            <TableCell className="text-right">19071.68₩</TableCell>
+    <ScrollArea
+      className={`${
+        category == "모두" ? "h-[77vh] w-full" : "h-[82vh] w-full"
+      }`}
+    >
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">코인</TableHead>
+            <TableHead>식별코드</TableHead>
+            <TableHead>거래량</TableHead>
+            <TableHead>시가총액</TableHead>
+            <TableHead>24H</TableHead>
+            <TableHead className="text-right">현재 가격</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {coin.map((item, index) => (
+            <TableRow key={item.id}>
+              <TableCell
+                onClick={() => navigate(`/market/${item.id}`)}
+                className="font-medium flex items-center gap-2"
+              >
+                <Avatar className="-z-50">
+                  <AvatarImage src={item.image} />
+                </Avatar>
+                <span>{item.name}</span>
+              </TableCell>
+              <TableCell>{item.symbol}</TableCell>
+              <TableCell>{item.total_volume}</TableCell>
+              <TableCell>{item.market_cap}</TableCell>
+              <TableCell>{item.price_change_percentage_24h}</TableCell>
+              <TableCell className="text-right">
+                {(item.current_price * exchangeRate).toLocaleString()}₩
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </ScrollArea>
   );
 };
 

@@ -14,8 +14,10 @@ import {
 } from "@radix-ui/react-icons";
 import React from "react";
 import Sidebar from "./SideBar";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const { auth } = useSelector((store) => store);
   return (
     <div className="px-2 py-3 border-b z-50 bg-background bg-opacity-0 sticky top-0 left-0 right-0 flex justify-between items-center">
       <div className="flex items-center gap-3">
@@ -59,7 +61,7 @@ const Navbar = () => {
       </div>
       <div className="">
         <Avatar>
-          <AvatarFallback>B</AvatarFallback>
+          <AvatarFallback>{auth.user.fullName[0].toUpperCase()}</AvatarFallback>
         </Avatar>
       </div>
     </div>
