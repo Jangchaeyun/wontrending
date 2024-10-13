@@ -2,12 +2,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { paymentHandler } from "@/State/Wallet/Action";
 import { DotFilledIcon } from "@radix-ui/react-icons";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 const TopupForm = () => {
   const [amount, setAmount] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("STRIPE");
+  const dispatch = useDispatch();
 
   const handlePaymentMethodChange = (value) => {
     setPaymentMethod(value);
@@ -19,6 +22,13 @@ const TopupForm = () => {
 
   const handleSubmit = () => {
     console.log(amount, paymentMethod);
+    dispatch(
+      paymentHandler({
+        jwt: localStorage.getItem("jwt"),
+        paymentMethod,
+        amount,
+      })
+    );
   };
   return (
     <div className="pt-10 space-y-5">

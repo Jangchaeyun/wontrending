@@ -17,11 +17,7 @@ const AssetTable = ({ coin, category }) => {
   const exchangeRate = 1349;
 
   return (
-    <ScrollArea
-      className={`${
-        category == "모두" ? "h-[77vh] w-full" : "h-[82vh] w-full"
-      }`}
-    >
+    <ScrollArea className={`${category == "모두" ? "h-[77vh]" : "h-[82vh]"}`}>
       <Table>
         <TableHeader>
           <TableRow>
