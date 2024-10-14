@@ -25,6 +25,9 @@ public class WalletController {
     @Autowired
     private PaymentService paymentService;
 
+    @Autowired
+    private TransactionService transactionService;
+
     @GetMapping("/api/wallet")
     public ResponseEntity<Wallet> getUserWallet(@RequestHeader("Authorization") String jwt) throws Exception {
         User user = userService.findUserProfileByJwt(jwt);
@@ -45,6 +48,14 @@ public class WalletController {
         Wallet wallet = walletService.walletToWalletTransfer(
                 senderUser, receiverWallet,
                 req.getAmount());
+
+        transactionService.createTransaction(
+                wallet,
+                WalletTransactionType.WALLET_TRANSFER,
+                receiverWallet.getId(),
+                req.getPurpose(),
+                req.getAmount()
+        );
 
         return new ResponseEntity<>(wallet, HttpStatus.ACCEPTED);
     }

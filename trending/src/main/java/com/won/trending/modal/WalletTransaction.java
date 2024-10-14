@@ -20,7 +20,7 @@ public class WalletTransaction {
 
     private LocalDate date;
 
-    private String transferId;
+    private Long transferId;
 
     private String purpose;
 

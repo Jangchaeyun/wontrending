@@ -20,7 +20,7 @@ const PaymentDetails = () => {
   return (
     <div className="px-20">
       <h1 className="text-3xl font-bold py-10">결제 세부정보</h1>
-      {true ? (
+      {false ? (
         <Card>
           <CardHeader>
             <CardTitle>토스 뱅크</CardTitle>

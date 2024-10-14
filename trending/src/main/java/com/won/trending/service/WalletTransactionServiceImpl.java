@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 public class WalletTransactionServiceImpl implements WalletTransactionService{
@@ -17,7 +16,7 @@ public class WalletTransactionServiceImpl implements WalletTransactionService{
     private WalletTransactionRepository walletTransactionRepository;
 
     @Override
-    public WalletTransaction createTransaction(Wallet wallet, WalletTransactionType type, String transfer, String purpose, Long amount) {
+    public WalletTransaction createTransaction(Wallet wallet, WalletTransactionType type, Long transfer, String purpose, Long amount) {
         WalletTransaction walletTransaction = new WalletTransaction();
         walletTransaction.setWallet(wallet);
         walletTransaction.setType(type);

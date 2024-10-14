@@ -5,5 +5,5 @@ import com.won.trending.modal.Wallet;
 import com.won.trending.modal.WalletTransaction;
 
 public interface WalletTransactionService {
-    WalletTransaction createTransaction(Wallet wallet, WalletTransactionType type, String transfer, String purpose, Long amount);
+    WalletTransaction createTransaction(Wallet wallet, WalletTransactionType type, Long transfer, String purpose, Long amount);
 }

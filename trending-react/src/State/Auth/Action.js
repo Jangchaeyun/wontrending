@@ -11,16 +11,14 @@ import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
 } from "./ActionTypes";
-import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "@/config/api";
 
 export const register = (userData) => async (dispatch) => {
-  const navigate = useNavigate();
   dispatch({
     type: REGISTER_REQUEST,
   });
-  const baseUrl = "http://localhost:5454";
   try {
-    const response = await axios.post(`${baseUrl}/auth/signup`, userData);
+    const response = await axios.post(`${API_BASE_URL}/auth/signup`, userData);
     const user = response.data;
     dispatch({ type: REGISTER_SUCCESS, payload: user.jwt });
     localStorage.setItem("jwt", user.jwt);
@@ -38,9 +36,11 @@ export const login = (userData) => async (dispatch) => {
   dispatch({
     type: LOGIN_REQUEST,
   });
-  const baseUrl = "http://localhost:5454";
   try {
-    const response = await axios.post(`${baseUrl}/auth/signin`, userData.data);
+    const response = await axios.post(
+      `${API_BASE_URL}/auth/signin`,
+      userData.data
+    );
     const user = response.data;
     dispatch({ type: LOGIN_SUCCESS, payload: user.jwt });
     localStorage.setItem("jwt", user.jwt);
@@ -59,9 +59,8 @@ export const getUser = (jwt) => async (dispatch) => {
   dispatch({
     type: GET_USER_REQUEST,
   });
-  const baseUrl = "http://localhost:5454";
   try {
-    const response = await axios.get(`${baseUrl}/api/users/profile`, {
+    const response = await axios.get(`${API_BASE_URL}/api/users/profile`, {
       headers: {
         Authorization: `Bearer ${jwt}`,
       },

@@ -156,11 +156,14 @@ const Wallet = () => {
         <div className="py-5 pt-10">
           <div className="flex gap-2 items-center pb-5">
             <h1 className="text-2xl font-semibold">기록</h1>
-            <UpdateIcon className="h-7 w-7 p-0 cursor-pointer hover:text-gray-400" />
+            <UpdateIcon
+              onClick={handleFetchWalletTransaction}
+              className="h-7 w-7 p-0 cursor-pointer hover:text-gray-400"
+            />
           </div>
 
           <div className="space-y-5">
-            {[1, 1, 1, 1, 1, 1, 1].map((item, i) => (
+            {wallet.transactions.map((item, i) => (
               <div key={i}>
                 <Card className="px-5 flex justify-between items-center p-2">
                   <div className="flex items-center gap-5">
@@ -170,12 +173,12 @@ const Wallet = () => {
                       </AvatarFallback>
                     </Avatar>
                     <div className="space-y-1">
-                      <h1>자산 구매</h1>
-                      <p className="text-sm text-gray-500">2024-10-08</p>
+                      <h1>{item.type || item.purpose}</h1>
+                      <p className="text-sm text-gray-500">{item.date}</p>
                     </div>
                   </div>
                   <div>
-                    <p className={`text-green-500`}>1234 ₩</p>
+                    <p className={`text-green-500`}>{item.amount} ₩</p>
                   </div>
                 </Card>
               </div>

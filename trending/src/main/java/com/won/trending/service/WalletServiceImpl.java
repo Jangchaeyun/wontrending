@@ -47,7 +47,6 @@ public class WalletServiceImpl implements WalletService {
         throw new Exception("wallet not found");
     }
 
-    @Transactional
     @Override
     public Wallet walletToWalletTransfer(User sender, Wallet receiverWallet, Long amount) throws Exception {
         Wallet senderWallet = getUserWallet(sender);
@@ -56,12 +55,14 @@ public class WalletServiceImpl implements WalletService {
             throw new Exception("Insufficient balance...");
         }
 
-        BigDecimal senderBalance = senderWallet.getBalance().subtract(BigDecimal.valueOf(amount));
+        BigDecimal senderBalance = senderWallet
+                .getBalance().subtract(BigDecimal.valueOf(amount));
         senderWallet.setBalance(senderBalance);
 
         walletRepository.save(senderWallet);
 
-        BigDecimal receiverBalance = receiverWallet.getBalance().add(BigDecimal.valueOf(amount));
+        BigDecimal receiverBalance = receiverWallet
+                .getBalance().add(BigDecimal.valueOf(amount));
         receiverWallet.setBalance(receiverBalance);
 
         walletRepository.save(receiverWallet);
