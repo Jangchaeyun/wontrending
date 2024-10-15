@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Avatar } from "@/components/ui/avatar";
 import {
   Table,
@@ -9,8 +9,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { AvatarImage } from "@radix-ui/react-avatar";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserAssets } from "@/State/Asset/Action";
 
 const Portfolio = () => {
+  const dispatch = useDispatch();
+  const { asset } = useSelector((store) => store);
+
+  useEffect(() => {
+    dispatch(getUserAssets(localStorage.getItem("jwt")));
+  }, []);
   return (
     <div className="px-5 lg:p-20">
       <h1 className="font-bold text-3xl pb-5">포트폴리오</h1>
@@ -19,26 +27,28 @@ const Portfolio = () => {
           <TableRow>
             <TableHead className="">자산</TableHead>
             <TableHead>가격</TableHead>
-            <TableHead>유닛</TableHead>
+            <TableHead>개수(주)</TableHead>
             <TableHead>평가 손익</TableHead>
             <TableHead>수익률(%)</TableHead>
             <TableHead>평가 금액</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {[1, 1, 1, 1, 1].map((item, index) => (
+          {asset.userAssets.map((item, index) => (
             <TableRow key={index}>
               <TableCell className="font-medium flex items-center gap-2">
                 <Avatar className="-z-50">
-                  <AvatarImage src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png" />
+                  <AvatarImage src={item.coin.image} />
                 </Avatar>
-                <span>Bitcoin</span>
+                <span>{item.coin.name}</span>
               </TableCell>
-              <TableCell>BTC</TableCell>
-              <TableCell>6834455792</TableCell>
-              <TableCell>376962336317</TableCell>
-              <TableCell>-19129.99</TableCell>
-              <TableCell className="text-right">19071.68₩</TableCell>
+              <TableCell>{item.coin.symbol.toUpperCase()}</TableCell>
+              <TableCell>{item.quantity}</TableCell>
+              <TableCell>{item.coin.price_change_24h}</TableCell>
+              <TableCell>{item.coin.price_change_percentage_24h}</TableCell>
+              <TableCell className="text-right">
+                {item.coin.total_volume.toLocaleString()}₩
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

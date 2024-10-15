@@ -52,26 +52,16 @@ public class CoinServiceImpl implements CoinService {
     public String getMarketChart(String coinId, int days) throws Exception {
         String url = "https://api.coingecko.com/api/v3/coins/" + coinId + "/market_chart?vs_currency=kwd&days=" + days;
         RestTemplate restTemplate = new RestTemplate();
-        int retries = 5;  // 재시도 횟수 증가
-        int backoff = 2000;  // 백오프 시간 증가 (2초)
-
-        for (int i = 0; i < retries; i++) {
             try {
                 HttpHeaders headers = new HttpHeaders();
                 HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
                 ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
                 return response.getBody();
             } catch (HttpClientErrorException | HttpServerErrorException e) {
-                if (e.getStatusCode().value() == 429) {  // Too Many Requests
-                    Thread.sleep(backoff);
-                    backoff *= 2;  // 백오프 시간 두 배 증가
-                } else {
                     throw new Exception(e.getMessage());
-                }
             }
-        }
-        throw new Exception("Failed after retries due to rate limit.");
     }
+
 
     @Override
     public String getCoinDetails(String coinId) throws Exception {

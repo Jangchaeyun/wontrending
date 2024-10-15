@@ -48,7 +48,7 @@ const StockDetails = () => {
             <div className="flex items-end gap-2">
               <p className="text-xl font-bold">
                 ₩{" "}
-                {coin.coinDetails?.market_data.current_price.krw.toLocaleString()}
+                {coin.coinDetails?.market_data.current_price.kwd.toLocaleString()}
               </p>
               <p>
                 <span className="text-red-600">
