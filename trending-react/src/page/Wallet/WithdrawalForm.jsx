@@ -1,19 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { withdrawalRequest } from "@/State/Withdrawal/Action";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const WithdrawalForm = () => {
   const [amount, setAmount] = useState("");
   const dispatch = useDispatch();
-  const { wallet } = useSelector((store) => store);
+  const { wallet, withdrawal } = useSelector((store) => store);
 
   const handleChange = (e) => {
     setAmount(e.target.value);
   };
 
   const handleSubmit = () => {
+    dispatch(withdrawalRequest({ amount, jwt: localStorage.getItem("jwt") }));
     console.log(amount);
   };
   return (
@@ -29,7 +31,7 @@ const WithdrawalForm = () => {
             onChange={handleChange}
             value={amount}
             className="withdrawalInput py-7 border-none outline-none focus:outline-none px-0 text-2xl text-center"
-            placeholder="₩ 9999"
+            placeholder="₩9999"
             type="number"
           />
         </div>
@@ -43,8 +45,12 @@ const WithdrawalForm = () => {
             alt=""
           />
           <div>
-            <p className="text-xl font-bold">토스 뱅크</p>
-            <p className="text-xs">***********1651</p>
+            <p className="text-xl font-bold">
+              {withdrawal.paymentDetails?.bankName}
+            </p>
+            <p className="text-xs">
+              {withdrawal.paymentDetails?.accountNumber}
+            </p>
           </div>
         </div>
       </div>

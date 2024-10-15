@@ -22,7 +22,6 @@ const PaymentDetailsForm = () => {
       accountHolderName: "",
       bic: "",
       accountNumber: "",
-      confirmAccountNumber: "",
       bankName: "",
     },
   });

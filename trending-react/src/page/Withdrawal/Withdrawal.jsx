@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Avatar } from "@/components/ui/avatar";
 import {
   Table,
@@ -9,8 +9,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { AvatarImage } from "@radix-ui/react-avatar";
+import { useDispatch, useSelector } from "react-redux";
+import { getWithdrawalHistory } from "@/State/Withdrawal/Action";
 
 const Withdrawal = () => {
+  const dispatch = useDispatch();
+  const { wallet, withdrawal } = useSelector((store) => store);
+
+  useEffect(() => {
+    dispatch(getWithdrawalHistory(localStorage.getItem("jwt")));
+  }, []);
   return (
     <div className="p-5 lg:p-20">
       <h1 className="font-bold text-3xl pb-5">인출</h1>
@@ -24,14 +32,14 @@ const Withdrawal = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {[1, 1, 1, 1, 1].map((item, index) => (
+          {withdrawal.history.map((item, index) => (
             <TableRow key={index}>
               <TableCell>
-                <p>10 8, 2024 6:27</p>
+                <p>{item.date.toString()}</p>
               </TableCell>
-              <TableCell>은향 계좌</TableCell>
-              <TableCell>376962336317</TableCell>
-              <TableCell className="text-right">345</TableCell>
+              <TableCell>Bank</TableCell>
+              <TableCell>{item.amount}</TableCell>
+              <TableCell className="text-right">{item.status}</TableCell>
             </TableRow>
           ))}
         </TableBody>
