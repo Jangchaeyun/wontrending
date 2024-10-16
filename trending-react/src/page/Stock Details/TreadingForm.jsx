@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const TreadingForm = () => {
-  const [orderType, setOrderType] = useState("");
+  const [orderType, setOrderType] = useState("BUY");
   const [amount, setAmount] = useState(0);
   const [quantity, setQuantity] = useState(0);
   const { coin, wallet, asset } = useSelector((store) => store);
@@ -97,8 +97,14 @@ const TreadingForm = () => {
               {coin.coinDetails?.market_data.current_price.kwd.toLocaleString()}
             </p>
             <p className="text-red-600">
-              <span>-19129.99</span>
-              <span>(-0.29803%)</span>
+              <span>
+                -{coin.coinDetails?.market_data.market_cap_change_24h}
+              </span>
+              <span>
+                (-
+                {coin.coinDetails?.market_data.market_cap_change_percentage_24h}
+                %)
+              </span>
             </p>
           </div>
         </div>
@@ -111,7 +117,7 @@ const TreadingForm = () => {
         <p>{orderType == "BUY" ? "사용 가능한 돈" : "사용 가능한 수량"}</p>
         <p>
           {orderType == "BUY"
-            ? "₩" + wallet.userWallet?.balance.toLocaleString()
+            ? "₩" + Math.floor(wallet.userWallet?.balance).toLocaleString()
             : asset.assetDetails?.quantity || 0}
         </p>
       </div>

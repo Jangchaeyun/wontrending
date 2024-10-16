@@ -78,7 +78,7 @@ const StockDetails = () => {
           </Button>
           <Dialog>
             <DialogTrigger>
-              <Button size="lg">구매</Button>
+              <Button size="lg">구매 및 팔기</Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>

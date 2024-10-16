@@ -47,7 +47,7 @@ const Portfolio = () => {
               <TableCell>{item.coin.price_change_24h}</TableCell>
               <TableCell>{item.coin.price_change_percentage_24h}</TableCell>
               <TableCell className="text-right">
-                {item.coin.total_volume.toLocaleString()}₩
+                {Math.floor(item.coin.total_volume).toLocaleString()}₩
               </TableCell>
             </TableRow>
           ))}
