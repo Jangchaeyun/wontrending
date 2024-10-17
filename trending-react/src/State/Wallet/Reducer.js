@@ -19,7 +19,7 @@ const initialState = {
   transactions: [],
 };
 
-export const walletReducer = (state = initialState, action) => {
+const walletReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USER_WALLET_REQUEST:
     case DEPOSIT_MONEY_REQUEST:
@@ -64,3 +64,5 @@ export const walletReducer = (state = initialState, action) => {
       return state;
   }
 };
+
+export default walletReducer;

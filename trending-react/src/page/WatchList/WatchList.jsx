@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Avatar } from "@/components/ui/avatar";
 import {
   Table,
@@ -11,11 +11,26 @@ import {
 import { AvatarImage } from "@radix-ui/react-avatar";
 import { Button } from "@/components/ui/button";
 import { BookmarkFilledIcon } from "@radix-ui/react-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { addItemToWatchlist, getUserWatchlist } from "@/State/Watchlist/Action";
 
 const WatchList = () => {
+  const dispatch = useDispatch();
+  const { watchlist } = useSelector((store) => store);
+
+  useEffect(() => {
+    dispatch(getUserWatchlist(localStorage.getItem("jwt")));
+  }, []);
+
   const handleRemoveToWatchlist = (value) => {
-    console.log(value);
+    dispatch(
+      addItemToWatchlist({
+        coinId: value,
+        jwt: localStorage.getItem("jwt"),
+      })
+    );
   };
+
   return (
     <div className="p-5 lg:p-20">
       <h1 className="font-bold text-3xl pb-5">관심목록</h1>
@@ -27,24 +42,24 @@ const WatchList = () => {
             <TableHead>거래량</TableHead>
             <TableHead>시가총액</TableHead>
             <TableHead>24H</TableHead>
-            <TableHead className="text-right">현재 가격</TableHead>
+            <TableHead>현재 가격</TableHead>
             <TableHead className="text-right text-red-600">제거</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {[1, 1, 1, 1, 1].map((item, index) => (
+          {watchlist.items.map((item, index) => (
             <TableRow key={index}>
               <TableCell className="font-medium flex items-center gap-2">
                 <Avatar className="-z-50">
-                  <AvatarImage src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png" />
+                  <AvatarImage src={item.image} />
                 </Avatar>
-                <span>Bitcoin</span>
+                <span>{item.name}</span>
               </TableCell>
-              <TableCell>BTC</TableCell>
-              <TableCell>6834455792</TableCell>
-              <TableCell>376962336317</TableCell>
-              <TableCell>-19129.99</TableCell>
-              <TableCell className="">19071.68₩</TableCell>
+              <TableCell>{item.symbol}</TableCell>
+              <TableCell>{item.total_volume}</TableCell>
+              <TableCell>{item.market_cap}</TableCell>
+              <TableCell>{item.price_change_percentage_24h}</TableCell>
+              <TableCell className="">{item.current_price}₩</TableCell>
               <TableCell className="text-right">
                 <Button
                   variant="ghost"
