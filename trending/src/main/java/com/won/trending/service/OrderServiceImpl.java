@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -37,7 +38,7 @@ public class OrderServiceImpl implements OrderService{
         order.setOrderItem(orderItem);
         order.setOrderType(orderType);
         order.setPrice(BigDecimal.valueOf(price));
-        order.setTimestamp(LocalDate.now());
+        order.setTimestamp(LocalDateTime.now());
         order.setStatus(OrderStatus.PENDING);
 
         return orderRepository.save(order);
@@ -59,12 +60,12 @@ public class OrderServiceImpl implements OrderService{
         OrderItem orderItem = new OrderItem();
         orderItem.setCoin(coin);
         orderItem.setQuantity(quantity);
+        orderItem.setBuyPrice(buyPrice);
         orderItem.setSellPrice(sellPrice);
 
         return orderItemRepository.save(orderItem);
     }
 
-    @Transactional
     public Order buyAsset(Coin coin, double quantity, User user) throws Exception {
         if (quantity <= 0) {
             throw new Exception("quantity should be > 0");
