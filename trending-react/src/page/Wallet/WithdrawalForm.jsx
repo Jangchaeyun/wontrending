@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { getUserWallet } from "@/State/Wallet/Action";
 import { withdrawalRequest } from "@/State/Withdrawal/Action";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const WithdrawalForm = () => {
@@ -22,7 +23,7 @@ const WithdrawalForm = () => {
     <div className="pt-10 space-y-5">
       <div className="flex justify-between items-center rounded-md bg-slate-100 text-xl font-bold px-5 py-4">
         <p>출금 가능한 잔액</p>
-        <p>₩ 9999</p>
+        <p>₩ {Math.floor(wallet.userWallet?.balance).toLocaleString()}</p>
       </div>
       <div className="flex flex-col items-center">
         <h1>출금 금액 입력</h1>

@@ -1,16 +1,5 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { VerifiedIcon } from "lucide-react";
 import React from "react";
-import AccountVartificationForm from "./AccountVartificationForm";
 import { useSelector } from "react-redux";
 
 const Profile = () => {
@@ -64,40 +53,6 @@ const Profile = () => {
             </div>
           </CardContent>
         </Card>
-        <div className="mt-6">
-          <Card className="w-full">
-            <CardHeader className="pb-7">
-              <div className="flex items-center gap-3">
-                <CardTitle>2단계 인증</CardTitle>
-                {true ? (
-                  <Badge className={"space-x-2 text-white bg-green-600"}>
-                    <VerifiedIcon />
-                    <span>인증 완료</span>
-                  </Badge>
-                ) : (
-                  <Badge className="bg-orange-500">인증 안됨</Badge>
-                )}
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div>
-                <Dialog>
-                  <DialogTrigger>
-                    <Button>2단계 인증 활성화</Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>계정을 확인하세요</DialogTitle>
-                    </DialogHeader>
-                    <AccountVartificationForm
-                      handleSubmit={handleEnableTwoStepVerficiation}
-                    />
-                  </DialogContent>
-                </Dialog>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
       </div>
     </div>
   );

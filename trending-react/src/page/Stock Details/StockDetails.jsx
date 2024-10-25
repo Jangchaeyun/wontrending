@@ -95,7 +95,7 @@ const StockDetails = () => {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>얼마나 구매하시겠습니까?</DialogTitle>
+                <DialogTitle>얼마나 구매/판매하시겠습니까?</DialogTitle>
               </DialogHeader>
               <TreadingForm />
             </DialogContent>

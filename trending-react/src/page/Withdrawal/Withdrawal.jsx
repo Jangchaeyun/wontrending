@@ -35,7 +35,7 @@ const Withdrawal = () => {
           {withdrawal.history.map((item, index) => (
             <TableRow key={index}>
               <TableCell>
-                <p>{item.date.toString()}</p>
+                <p>{new Date(item.date).toLocaleDateString()}</p>
               </TableCell>
               <TableCell>Bank</TableCell>
               <TableCell>{item.amount}</TableCell>
